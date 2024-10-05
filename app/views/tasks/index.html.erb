@@ -1,0 +1,48 @@
+<p style="color: green"><%= notice %></p>
+
+<% content_for :title, "Tasks" %>
+
+<h1>Tasks</h1>
+
+<%= form_with url: posts_path, method: :get, local: true do %>
+  <div>
+    <%= label_tag :category, "Filter by Category" %>
+    <%= select_tag :category, options_for_select(Category.pluck(:name, :id), params[:category]), prompt: "All Categories" %>
+  </div>
+
+  <%# <div> %>
+    <%# <%= label_tag :status, "Filter by Status" %>
+    <%# <%= select_tag :status, options_for_select(Post.statuses.keys.map { |k| [k.humanize, k] }, params[:status]), prompt: "All Statuses" %> %>
+  <%# </div> %>
+  <div>
+    <%= submit_tag "Filter", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Task Title</th>
+      <th>Description</th>
+      <th>Status</th>
+      <th>Category</th> 
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr>
+        <td><%= task.title%></td>
+        <td><%= task.description%></td>
+        <td><%= task.status%></td>
+        <td><%= task.category.name%></td> <!-- Use the correct attribute -->
+        <td>
+          <%= link_to "Edit", edit_task_path(task) %> |
+          <%= link_to "Delete", task, method: :delete, data: { confirm: "Are you sure?" } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "New task", new_task_path %>
