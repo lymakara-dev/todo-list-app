@@ -4,16 +4,15 @@
 
 <h1>Tasks</h1>
 
-<%= form_with url: posts_path, method: :get, local: true do %>
+<%= form_with url: tasks_path, method: :get, local: true do %>
   <div>
     <%= label_tag :category, "Filter by Category" %>
     <%= select_tag :category, options_for_select(Category.pluck(:name, :id), params[:category]), prompt: "All Categories" %>
   </div>
-
-  <%# <div> %>
-    <%# <%= label_tag :status, "Filter by Status" %>
-    <%# <%= select_tag :status, options_for_select(Post.statuses.keys.map { |k| [k.humanize, k] }, params[:status]), prompt: "All Statuses" %> %>
-  <%# </div> %>
+  <div>
+    <%= label_tag :status, "Filter by Status" %>
+    <%= select_tag :status, options_for_select(Task.statuses.keys.map { |k| [k.humanize, k] }, params[:status]), prompt: "All Statuses" %>
+  </div>
   <div>
     <%= submit_tag "Filter", class: "btn btn-primary" %>
   </div>

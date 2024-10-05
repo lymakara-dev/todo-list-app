@@ -4,8 +4,14 @@ class TasksController < ApplicationController
   # GET /tasks or /tasks.json
   def index
     @tasks = Task.all
+    # Apply category filter if selected
+    if params[:category].present?
+      @tasks = @tasks.where(category_id: params[:category])
+    end
+    if params[:status].present?
+      @tasks = @tasks.where(status: params[:status])
+    end
   end
-
   # GET /tasks/1 or /tasks/1.json
   def show
   end
